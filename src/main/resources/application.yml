@@ -1,0 +1,50 @@
+server:
+  port: 8888
+  shutdown: graceful
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/groupbuy_db?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    hikari:
+      pool-name: MASTER
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 3000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+logging:
+  level:
+    com.threelabs: debug
+    org.hibernate.SQL: DEBUG
+
+threelabs:
+  token:
+    secret-key: groupbuy-demo-secret-key-must-be-at-least-32-chars
+    access-token:
+      name: groupbuy_admin_access_token
+      valid-time: 10800000
+  origin:
+    admin: http://localhost:8081
+    user: http://localhost:8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
