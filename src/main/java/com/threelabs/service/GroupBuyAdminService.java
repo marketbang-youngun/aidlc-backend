@@ -219,6 +219,26 @@ public class GroupBuyAdminService {
         groupBuyRepository.save(groupBuy);
     }
 
+    @Transactional(readOnly = true)
+    public List<ParticipantResponseDto> getParticipants(Long groupBuyId) {
+        groupBuyRepository.findById(groupBuyId)
+                .orElseThrow(() -> new CustomErrorCodeException("공동구매를 찾을 수 없습니다.", 1));
+
+        List<Participation> participations = participationRepository
+                .findByGroupBuyNoAndStatusOrderByAppendDateDesc(groupBuyId, ParticipationStatus.ACTIVE);
+
+        return participations.stream()
+                .map(p -> ParticipantResponseDto.builder()
+                        .email(maskEmail(p.getUserEmail()))
+                        .displayName(p.getUserDisplayName())
+                        .quantity(p.getQuantity())
+                        .amount(p.getExpectedAmount())
+                        .status(p.getStatus())
+                        .createdAt(p.getAppendDate())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
     private String maskEmail(String email) {
         if (email == null || !email.contains("@")) return email;
         String[] parts = email.split("@");

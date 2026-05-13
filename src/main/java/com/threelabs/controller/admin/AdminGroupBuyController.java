@@ -5,6 +5,7 @@ import com.threelabs.dto.admin.request.GroupBuyCreateRequestDto;
 import com.threelabs.dto.admin.request.GroupBuyUpdateRequestDto;
 import com.threelabs.dto.admin.response.GroupBuyDetailResponseDto;
 import com.threelabs.dto.admin.response.GroupBuyListResponseDto;
+import com.threelabs.dto.admin.response.ParticipantResponseDto;
 import com.threelabs.enumration.GroupBuyStatus;
 import com.threelabs.service.GroupBuyAdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "어드민 - 공동구매")
 @RequiredArgsConstructor
@@ -74,5 +77,12 @@ public class AdminGroupBuyController {
     public ResponseEntity<ResponseDto<Void>> completeGroupBuy(@PathVariable Long id) {
         groupBuyAdminService.completeGroupBuy(id);
         return ResponseEntity.ok(new ResponseDto<>(0, "공동구매가 완료되었습니다.", null));
+    }
+
+    @Operation(summary = "공동구매 참여자 목록 조회")
+    @GetMapping("/{id}/participants")
+    public ResponseEntity<ResponseDto<List<ParticipantResponseDto>>> getParticipants(@PathVariable Long id) {
+        List<ParticipantResponseDto> participants = groupBuyAdminService.getParticipants(id);
+        return ResponseEntity.ok(new ResponseDto<>(0, "", participants));
     }
 }
