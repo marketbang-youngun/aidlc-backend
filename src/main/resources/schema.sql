@@ -54,4 +54,4 @@ CREATE TABLE IF NOT EXISTS participation (
 
 -- 초기 어드민 계정 (ID: admin@marketbang.kr / PW: admin1234)
 INSERT IGNORE INTO admin_user (USER_ID, USER_PWD, USER_NAME, USE_YN, APPEND_DATE)
-VALUES ('admin@marketbang.kr', '{bcrypt}$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '관리자', 'Y', NOW());
+VALUES ('admin@marketbang.kr', '{bcrypt}$2a$10$F7m6paESDDvAFtUkrAdIn.Dl8T/c3XqqDDGFd/Smv4r4ZlWUO69BC', '관리자', 'Y', NOW());

@@ -32,7 +32,7 @@ public class AdminGroupBuyController {
     }
 
     @Operation(summary = "공동구매 목록 조회")
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<ResponseDto<Page<GroupBuyListResponseDto>>> getGroupBuyList(
             @RequestParam(required = false) GroupBuyStatus status,
             @PageableDefault(size = 10) Pageable pageable) {
